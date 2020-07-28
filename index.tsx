@@ -19,10 +19,16 @@ import {
 } from 'react-native';
 import Import from './import';
 
+interface LineItemsProps {
+    price: string,
+    quantity: number,
+}
+
 interface StripeCheckoutScaProps {
     publicKey: string,
     webViewStyle?: StyleProp<ViewStyle>,
     sessionId: string,
+    lineItems: Array<LineItemsProps>{},
     onClose: () => void,
     onNavigationStateChange: (any) => void,
     modalVisible: boolean,
@@ -37,6 +43,7 @@ class StripeCheckoutSca extends Component<StripeCheckoutScaProps, any> {
             webViewStyle,
             onClose,
             sessionId,
+            lineItems,
             onNavigationStateChange,
             modalVisible,
             closeButtonContainerStyle,
@@ -72,7 +79,8 @@ class StripeCheckoutSca extends Component<StripeCheckoutScaProps, any> {
                             window.onload = function() {
                                 stripe.redirectToCheckout({
                                       // Define the sessionId you get server side
-                                      sessionId: '${sessionId}'
+                                      // sessionId: '${sessionId}'
+                                      lineItems: '${lineItems}',              
                                   }).then(function (result) {
                                   // If \`redirectToCheckout\` fails due to a browser or network
                                   // error, display the localized error message to your customer
